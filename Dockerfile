@@ -118,5 +118,4 @@ ENV PATH="/opt/data/.local/bin:${PATH}"
 RUN mkdir -p /opt/data
 ENTRYPOINT [ "/usr/bin/tini", "-g", "--", "/opt/hermes/docker/entrypoint.sh" ]
 ENV HERMES_HOME=/data/.hermes
-
 CMD ["sh", "-lc", "mkdir -p \"$HERMES_HOME\" && hermes gateway run"]
