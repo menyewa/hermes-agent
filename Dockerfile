@@ -113,9 +113,11 @@ RUN uv pip install --no-cache-dir --no-deps -e "."
 
 # ---------- Runtime ----------
 ENV HERMES_WEB_DIST=/opt/hermes/hermes_cli/web_dist
-ENV HERMES_HOME=/opt/data
-ENV PATH="/opt/data/.local/bin:${PATH}"
-RUN mkdir -p /opt/data
-ENTRYPOINT [ "/usr/bin/tini", "-g", "--", "/opt/hermes/docker/entrypoint.sh" ]
 ENV HERMES_HOME=/data/.hermes
-CMD ["sh", "-lc", "mkdir -p \"$HERMES_HOME\" && hermes gateway run"]
+ENV PATH="/opt/hermes/.venv/bin:/opt/data/.local/bin:${PATH}"
+
+RUN mkdir -p /data
+
+ENTRYPOINT [ "/usr/bin/tini", "-g", "--", "/opt/hermes/docker/entrypoint.sh" ]
+
+CMD ["sh", "-lc", "mkdir -p \"$HERMES_HOME\" && exec /opt/hermes/.venv/bin/hermes gateway run"]
